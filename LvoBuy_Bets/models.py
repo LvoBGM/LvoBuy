@@ -39,3 +39,15 @@ class Bid(models.Model):
         Listing,
         on_delete=models.CASCADE,
     )
+
+class Comments(models.Model):
+    comment = models.CharField()
+    date = models.DateField(auto_now_add=True)
+    
+    commenter = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="comments"
+    )
