@@ -25,3 +25,17 @@ class Listing(models.Model):
         blank=True,
         related_name="winning_bids"
     )
+
+class Bid(models.Model):
+    bidder = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="bids"
+    )
+
+    listing = models.ForeignKey(
+        Listing,
+        on_delete=models.CASCADE,
+    )
