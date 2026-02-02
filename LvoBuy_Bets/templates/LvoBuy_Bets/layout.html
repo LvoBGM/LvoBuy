@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+    <body>
+        <nav id="nav">
+            <a class="nav-item" href="">Home</a>
+            <a class="nav-item" href="">Active Listings</a>
+            <a class="nav-item" href="">Log in</a>
+            <a class="nav-item" href="">Register</a>
+        </nav>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
