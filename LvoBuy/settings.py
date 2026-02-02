@@ -35,7 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'LvoBuy_Bets',
+    'bets',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,7 +84,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'LvoBuy_Bets.User'
+AUTH_USER_MODEL = 'bets.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
