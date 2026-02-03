@@ -7,9 +7,13 @@
     <body>
         <nav id="nav">
             <a class="nav-item" href="">Home</a>
-            <a class="nav-item" href="">My Bets</a>
-            <a class="nav-item" href="">Log in</a>
-            <a class="nav-item" href="">Register</a>
+            {% if authenticated %}
+                <a class="nav-item" href="">My Bets</a>
+                <a class="nav-item" href="{% url "logout" %}">Log Out</a>
+            {% else %}
+                <a class="nav-item" href="{% url "login" %}">Log in</a>
+                <a class="nav-item" href="">Register</a>
+            {% endif %}
         </nav>
         {% block body %}
         {% endblock %}
