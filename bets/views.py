@@ -8,7 +8,7 @@ def login_view(request):
     return render(request, "bets/login.html")
 
 def logout_view(request):
-    ...
+    pass
 
 def register_view(request):
     return render(request, "register.html"),
