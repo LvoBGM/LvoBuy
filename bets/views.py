@@ -25,7 +25,8 @@ def login_view(request):
     return render(request, "bets/login.html")
 
 def logout_view(request):
-    pass
+    logout(request)
+    return redirect("index")
 
 def register_view(request):
     return render(request, "register.html"),
