@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
             name='Bid',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('listing', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='LvoBuy_Bets.listing')),
+                ('listing', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='bets.listing')),
                 ('bidder', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='bids', to=settings.AUTH_USER_MODEL)),
             ],
         ),
