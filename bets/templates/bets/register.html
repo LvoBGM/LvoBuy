@@ -1,0 +1,14 @@
+{% extends "bets/layout.html" %}
+
+{% block body %}
+
+   {% if message %}
+      <div>{{ message }}</div>
+   {% endif %}
+
+   <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit", value="Register">
+   </form>
+{% endblock %}
