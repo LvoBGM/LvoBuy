@@ -12,7 +12,7 @@
                 <a class="nav-item" href="{% url "logout" %}">Log Out</a>
             {% else %}
                 <a class="nav-item" href="{% url "login" %}">Log in</a>
-                <a class="nav-item" href="">Register</a>
+                <a class="nav-item" href="{% url 'register' %}">Register</a>
             {% endif %}
         </nav>
         {% block body %}
