@@ -2,15 +2,22 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import ModelForm
+from django import forms
 from bets.models import Listing
 
 
 # Forms
-class NewListingForm(ModelForm):
+class NewListingForm(forms.ModelForm):
     class Meta:
         model = Listing
         fields = ["title", "description", "image_url", "current_bid"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Listing Title'})
+        self.fields['description'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Listing Description'})
+        self.fields['image_url'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter An Image URL'})
+        self.fields['current_bid'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Starting Bid'})
 
 # Create your views here.
 def index(request):
