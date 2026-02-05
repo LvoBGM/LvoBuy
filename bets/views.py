@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from bets.models import Listing
@@ -51,8 +52,21 @@ def register_view(request):
         "form": form,
     })
 
+@login_required()
 def new_listing(request):
-    form = NewListingForm()
+    if request.method == 'POST':
+        form = NewListingForm(request.POST)
+        if form.is_valid():
+
+            listing = form.save(commit=False)
+            listing.seller = request.user
+            listing.save()
+            
+            return redirect("index")
+    else:
+        form = NewListingForm()
+
     return render(request, "bets/new_listing.html", {
+        "authenticated": request.user.is_authenticated,
         "form": form
     })
