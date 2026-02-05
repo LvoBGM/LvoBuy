@@ -52,7 +52,7 @@ def register_view(request):
         "form": form,
     })
 
-@login_required()
+@login_required() # TODO: Test if validation works even when a user posts an invalid request
 def new_listing(request):
     if request.method == 'POST':
         form = NewListingForm(request.POST)
