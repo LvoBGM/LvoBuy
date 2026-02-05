@@ -1,6 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from django.forms import ModelForm
+from bets.models import Listing
+
+
+# Forms
+class NewListingForm(ModelForm):
+    class Meta:
+        model = Listing
+        fields = ["title", "description", "image_url", "current_bid"]
 
 # Create your views here.
 def index(request):
@@ -40,4 +49,10 @@ def register_view(request):
     
     return render(request, "bets/register.html", {
         "form": form,
+    })
+
+def new_listing(request):
+    form = NewListingForm()
+    return render(request, "bets/new_listing.html", {
+        "form": form
     })
