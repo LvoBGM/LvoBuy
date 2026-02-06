@@ -1,0 +1,20 @@
+{% extends "bets/layout.html" %}
+
+{% block title %}
+    My Profile
+{% endblock title %}
+
+{% block body %}
+    <h1>{{ name }}</h1>
+    <hr>
+    <h2> My Listings </h2>
+    <div id="listings-list">
+    {% for listing in listings %}
+        <div id="listing-container">
+            <h2>{{listing.title}}</h2>
+            <p>{{listing.description}}</p>
+            {{listing.current_bid}}
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

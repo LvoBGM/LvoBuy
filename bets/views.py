@@ -78,3 +78,10 @@ def new_listing(request):
         "authenticated": request.user.is_authenticated,
         "form": form
     })
+
+@login_required()
+def account(request):
+    return render(request, "bets/account.html", {
+        "authenticated": request.user.is_authenticated,
+        "listings": request.user.listings.all()
+    })
