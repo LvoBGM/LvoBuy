@@ -1,0 +1,10 @@
+#listing-container {
+    height: 250px;
+    overflow: hidden;
+}
+
+#listing-container img {
+    width: auto;
+    height: 180px;
+    object-fit: contain;
+}

@@ -1,4 +1,9 @@
 {% extends "bets/layout.html" %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'bets/styles.css' %}">
+{% endblock stylesheet %}
 
 {% block body %}
     <h1>Active Listings</h1>
@@ -7,6 +12,9 @@
     {% for listing in listings %}
         <div id="listing-container">
             <h2>{{listing.title}}</h2>
+            {% if listing.image_url %}
+                <img src="{{ listing.image_url }}">
+            {% endif %}
             <p>{{listing.description}}</p>
             {{listing.current_bid}}
         </div>
