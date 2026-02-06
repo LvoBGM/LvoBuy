@@ -3,4 +3,13 @@
 {% block body %}
     <h1>Active Listings</h1>
     <hr>
+    <div id="listings-list">
+    {% for listing in listings %}
+        <div id="listing-container">
+            <h2>{{listing.title}}</h2>
+            <p>{{listing.description}}</p>
+            {{listing.current_bid}}
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}

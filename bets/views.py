@@ -19,10 +19,11 @@ class NewListingForm(forms.ModelForm):
         self.fields['image_url'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter An Image URL'})
         self.fields['current_bid'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Starting Bid'})
 
-# Create your views here.
+# Views
 def index(request):
     return render(request, "bets/index.html", {
-        "authenticated": request.user.is_authenticated
+        "authenticated": request.user.is_authenticated,
+        "listings": Listing.objects.all(),
     })
 
 def login_view(request):
