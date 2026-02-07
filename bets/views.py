@@ -83,5 +83,6 @@ def new_listing(request):
 def account(request):
     return render(request, "bets/account.html", {
         "authenticated": request.user.is_authenticated,
-        "listings": request.user.listings.all()
+        "listings": request.user.listings.all(),
+        "username": request.user.get_username(),
     })
