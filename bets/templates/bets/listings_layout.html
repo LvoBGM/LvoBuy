@@ -1,12 +1,11 @@
 <!-- a "listings" variable is required! -->
-<div id="listings-list">
+<div id="listing-grid">
     {% for listing in listings %}
-        <div id="listing-container">
-            <h2>{{listing.title}}</h2>
+        <div class="listing-item">
             {% if listing.image_url %}
                 <img src="{{ listing.image_url }}">
             {% endif %}
-            <p>{{listing.description}}</p>
+            <h2>{{listing.title}}</h2>
             {{listing.current_bid}}
         </div>
     {% endfor %}

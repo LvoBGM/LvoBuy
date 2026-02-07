@@ -1,10 +1,16 @@
-#listing-container {
+.listing-item {
     height: 250px;
     overflow: hidden;
 }
 
-#listing-container img {
+.listing-item img {
     width: auto;
+    max-width: 300px;
     height: 180px;
     object-fit: contain;
+}
+
+#listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
