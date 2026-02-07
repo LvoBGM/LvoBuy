@@ -1,6 +1,12 @@
 .listing-item {
     height: 250px;
+    max-width: 300px;
+}
+
+.listing-item #listing-title {
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .listing-item img {
