@@ -1,7 +1,7 @@
 <!-- a "listings" variable is required! -->
 <div id="listing-grid">
     {% for listing in listings %}
-    <a href="{% url 'listing' listing.id %}">
+    <a id="listing-anchor" href="{% url 'listing' listing.id %}">
         <div class="listing-item">
             {% if listing.image_url %}
                 <img src="{{ listing.image_url }}">
