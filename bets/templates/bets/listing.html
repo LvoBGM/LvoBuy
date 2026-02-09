@@ -1,12 +1,19 @@
 {% extends "bets/layout.html" %}
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'bets/listing_page_styles.css' %}">
+{% endblock stylesheet %}
 
 {% block body %}
-<div>
+<div id="listing-grid">
     {% if listing.image_url %}
-        <img src="{{ listing.image_url }}">
+        <img id='listing-image' src="{{ listing.image_url }}">
     {% endif %}
-    <h1>{{listing.title}}</h1>
+    <div id="listing-info">
+    <h1 id="listing-title">{{listing.title}}</h1>
     <hr>
-    <p>{{listing.description}}</p>
+    <p id="listing-description">{{listing.description}}</p>
+    </div>
 </div>
 {% endblock %}

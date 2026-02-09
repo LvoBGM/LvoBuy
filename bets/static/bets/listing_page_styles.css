@@ -1,0 +1,43 @@
+#listing-grid {
+    display: grid;
+    grid-template-columns: 300px 150px;
+    grid-template-rows: 300px 300px;
+    gap: 1em;
+    grid-template-areas: 
+    "box-1 box-2"
+    "box-1 box-2";
+}
+
+#listing-image {
+    width: auto;
+    height: auto;
+    max-width: 300px;
+    object-fit: contain;
+    grid-area: box-1;
+}
+
+#listing-info {
+    grid-area: box-2;
+}
+
+@media (min-width: 768px) {
+    #listing-grid {
+        display: grid;
+        grid-template-columns: 600px 300px;
+        grid-template-rows: 300px 300px;
+        gap: 1em;
+        grid-template-areas: 
+        "box-1 box-2"
+        "box-1 box-2";
+        justify-content: center;
+        align-content: center;
+    }
+    #listing-image {
+        width: auto;
+        height: auto;
+        max-width: 600px;
+        object-fit: contain;
+        grid-area: box-1;
+        align-self: center;
+    }
+}
