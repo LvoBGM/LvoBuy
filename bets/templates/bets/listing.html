@@ -1,0 +1,12 @@
+{% extends "bets/layout.html" %}
+
+{% block body %}
+<div>
+    {% if listing.image_url %}
+        <img src="{{ listing.image_url }}">
+    {% endif %}
+    <h1>{{listing.title}}</h1>
+    <hr>
+    <p>{{listing.description}}</p>
+</div>
+{% endblock %}

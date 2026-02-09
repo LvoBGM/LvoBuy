@@ -86,3 +86,13 @@ def account(request):
         "listings": request.user.listings.all(),
         "username": request.user.get_username(),
     })
+
+def listing(request, id):
+    queryset = Listing.objects.filter(id=id)
+    if queryset.exists():
+        listing = queryset.first()
+        
+    return render(request, "bets/listing.html", {
+        "authenticated": request.user.is_authenticated,
+        "listing": listing,
+    })
