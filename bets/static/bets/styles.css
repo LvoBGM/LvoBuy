@@ -1,6 +1,13 @@
+hr {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 .listing-item {
+    display: flex;
     height: 250px;
     max-width: 300px;
+    flex-direction: column;
 }
 
 .listing-item #listing-title {
@@ -19,6 +26,7 @@
 #listing-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    padding: 3vw;
 }
 
 #listing-anchor {
