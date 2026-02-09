@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MinValueValidator
 from django.conf import settings
 
 # Create your models here.
@@ -7,20 +8,12 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.CharField()
     image_url = models.URLField(blank=True)
-    current_bid = models.FloatField()
+    starting_bid = models.CharField()
 
     seller = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="listings"
-    )
-
-    highest_bidder = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="winning_bids"
     )
 
 class Bid(models.Model):
@@ -35,7 +28,11 @@ class Bid(models.Model):
     listing = models.ForeignKey(
         Listing,
         on_delete=models.CASCADE,
+        related_name="bids"
     )
+
+    amount = models.FloatField()
+    
 
 class Comments(models.Model):
     comment = models.CharField()
@@ -46,5 +43,11 @@ class Comments(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        related_name="comments"
+    )
+
+    listing = models.ForeignKey (
+        Listing,
+        on_delete=models.CASCADE,
         related_name="comments"
     )

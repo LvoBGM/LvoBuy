@@ -10,14 +10,17 @@ from bets.models import Listing
 class NewListingForm(forms.ModelForm):
     class Meta:
         model = Listing
-        fields = ["title", "description", "image_url", "current_bid"]
+        fields = ["title", "description", "image_url", "starting_bid"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Listing Title'})
         self.fields['description'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Listing Description'})
         self.fields['image_url'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter An Image URL'})
-        self.fields['current_bid'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Starting Bid'})
+        self.fields['starting_bid'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Starting Bid'})
+
+class NewBetForm(forms.ModelForm):
+    ...
 
 # Views
 def index(request):
