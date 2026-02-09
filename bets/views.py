@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from bets.models import Listing
+from django.db.models import Max
+from bets.models import Listing, Bid
 
 
 # Forms
@@ -19,8 +20,10 @@ class NewListingForm(forms.ModelForm):
         self.fields['image_url'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter An Image URL'})
         self.fields['starting_bid'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Starting Bid'})
 
-class NewBetForm(forms.ModelForm):
-    ...
+class NewBidForm(forms.ModelForm):
+    class Meta:
+        model = Bid
+        fields = ["amount"]
 
 # Views
 def index(request):
@@ -94,8 +97,31 @@ def listing(request, id):
     queryset = Listing.objects.filter(id=id)
     if queryset.exists():
         listing = queryset.first()
+        if request.method == 'POST': #TODO: I think this needs to be redone, like if there are not bids the user should only have the option to bid the starting amount
+            form = NewBidForm(request.POST)
+            if form.is_valid():
+                highest_bid = Bid.objects.filter(listing=listing).aggregate(Max('amount'))['amount__max']
+                bid = form.save(commit=False)
+                bid.bidder = request.user
+                bid.listing = listing
+                # If bid is the highest bid or is the first bid with enough cash to go through
+                message = "You cannot outbid the highest bidder with such a low bid!"
+                if (highest_bid is not None and highest_bid < bid.amount) or (highest_bid is None and bid.amount >= int(listing.starting_bid)):
+                    bid.save()
+                    message = "You are now the highest bidder!"
+                return render(request, "bets/listing.html", {
+                    "authenticated": request.user.is_authenticated,
+                    "listing": listing,
+                    "form": form,
+                    "message": message,
+                })
+        else:
+            form = NewBidForm()
+    else:
+        return redirect("index") # TODO: This should display a page not found error or smth
         
     return render(request, "bets/listing.html", {
         "authenticated": request.user.is_authenticated,
         "listing": listing,
+        "form": form,
     })
