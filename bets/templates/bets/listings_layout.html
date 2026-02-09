@@ -1,6 +1,7 @@
 <!-- a "listings" variable is required! -->
 <div id="listing-grid">
     {% for listing in listings %}
+    <a href="{% url 'listing' listing.id %}">
         <div class="listing-item">
             {% if listing.image_url %}
                 <img src="{{ listing.image_url }}">
@@ -8,5 +9,6 @@
             <h2 id="listing-title" title="{{listing.title}}">{{listing.title}}</h2>
             {{listing.current_bid}}
         </div>
+    </a>
     {% endfor %}
 </div>
