@@ -119,12 +119,9 @@ def listing(request, id):
             if 'submit_bid' in request.POST:
                 if not request.user.is_authenticated:
                     message = "You need to be logged in to bid!"
-                    print("afdg")
                     return render(request, "bets/listing.html", {
                         "authenticated": request.user.is_authenticated,
                         "listing": listing,
-                        "bid_form": bid_form,
-                        "comment_form": comment_form,
                         "message": message,
                         "bids": bids,
                     })
@@ -152,10 +149,8 @@ def listing(request, id):
             elif 'submit_comment' in request.POST:
                 if not request.user.is_authenticated:
                     return render(request, "bets/listing.html", {
-                        "authenticated": request.user.is_authenticated,
+                        "authenticated": False,
                         "listing": listing,
-                        "bid_form": NewBidForm(),
-                        "comment_form": NewCommentForm(),
                         "message": message,
                         "bids": bids,
                     })
@@ -172,7 +167,7 @@ def listing(request, id):
                     return render(request, "bets/listing.html", {
                         "authenticated": request.user.is_authenticated,
                         "listing": listing,
-                        "bid_form": NewBidForm(),
+                        "bid_form": bid_form,
                         "comment_form": NewCommentForm(),
                         "message": message,
                     })

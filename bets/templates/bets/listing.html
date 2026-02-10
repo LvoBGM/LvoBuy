@@ -42,10 +42,12 @@
 </div>
 
 <div id="comments-section">
+    {% if authenticated %}
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
         {{ comment_form }}
         <input type="submit", value="Post" name="submit_comment">
     </form>
+    {% endif %}
 </div>
 {% endblock %}
