@@ -25,19 +25,27 @@
         {% endif %}
     </p>
     
-    {% if authenticated and form%}
+    {% if authenticated and bid_form %}
     {% if not bids %}
         Starting bid: {{listing.starting_bid}}
     {% endif %}
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit", value="Bid">
+        {{ bid_form }}
+        <input type="submit", value="Bid" name="submit_bid">
     </form>
     {% endif %}
     {% if message %}
             <div>{{ message }}</div>
     {% endif %}
     </div>
+</div>
+
+<div id="comments-section">
+    <form action="{% url 'listing' listing.id %}" method="post">
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit", value="Post" name="submit_comment">
+    </form>
 </div>
 {% endblock %}

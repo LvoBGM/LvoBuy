@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.db.models import Max
-from bets.models import Listing, Bid
+from bets.models import Listing, Bid, Comments
+from datetime import date
 
 
 # Forms
@@ -24,6 +25,16 @@ class NewBidForm(forms.ModelForm):
     class Meta:
         model = Bid
         fields = ["amount"]
+class NewCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = ['comment']
+        widgets = {
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Leave a comment...'
+            }),
+        }
 
 # Views
 def index(request):
@@ -95,48 +106,83 @@ def account(request):
 
 def listing(request, id):
     queryset = Listing.objects.filter(id=id)
+    bid_form = NewBidForm()
+    comment_form = NewCommentForm()
+    message = ""
+
     if queryset.exists():
         listing = queryset.first()
         bids = listing.bids.all()
         if request.method == 'POST': #TODO: I think this needs to be redone, like if there are not bids the user should only have the option to bid the starting amount 
-            form = NewBidForm(request.POST)
 
-            if not request.user.is_authenticated:
-                message = "You need to be logged in to bid!"
-                print("afdg")
-                return render(request, "bets/listing.html", {
-                    "authenticated": request.user.is_authenticated,
-                    "listing": listing,
-                    "form": form,
-                    "message": message,
-                    "bids": bids,
-                })
-            
-            if form.is_valid():
-                highest_bid = Bid.objects.filter(listing=listing).aggregate(Max('amount'))['amount__max']
-                bid = form.save(commit=False)
-                bid.bidder = request.user
-                bid.listing = listing
-                # If bid is the highest bid or is the first bid with enough cash to go through
-                message = "You cannot outbid the highest bidder with such a low bid!"
-                if (highest_bid is not None and highest_bid < bid.amount) or (highest_bid is None and bid.amount >= int(listing.starting_bid)):
-                    bid.save()
-                    message = "You are now the highest bidder!"
-                return render(request, "bets/listing.html", {
-                    "authenticated": request.user.is_authenticated,
-                    "listing": listing,
-                    "form": form,
-                    "message": message,
-                    "bids": bids,
-                })
-        else:
-            form = NewBidForm()
+            # Bid Form
+            if 'submit_bid' in request.POST:
+                if not request.user.is_authenticated:
+                    message = "You need to be logged in to bid!"
+                    print("afdg")
+                    return render(request, "bets/listing.html", {
+                        "authenticated": request.user.is_authenticated,
+                        "listing": listing,
+                        "bid_form": bid_form,
+                        "comment_form": comment_form,
+                        "message": message,
+                        "bids": bids,
+                    })
+
+                bid_form = NewBidForm(request.POST)
+                if bid_form.is_valid():
+                    highest_bid = Bid.objects.filter(listing=listing).aggregate(Max('amount'))['amount__max']
+                    bid = bid_form.save(commit=False)
+                    bid.bidder = request.user
+                    bid.listing = listing
+                    # If bid is the highest bid or is the first bid with enough cash to go through
+                    message = "You cannot outbid the highest bidder with such a low bid!"
+                    if (highest_bid is not None and highest_bid < bid.amount) or (highest_bid is None and bid.amount >= int(listing.starting_bid)):
+                        bid.save()
+                        message = "You are now the highest bidder!"
+                    return render(request, "bets/listing.html", {
+                        "authenticated": request.user.is_authenticated,
+                        "listing": listing,
+                        "bid_form": bid_form,
+                        "comment_form": comment_form,
+                        "message": message,
+                        "bids": bids,
+                    })
+            # Comment Form
+            elif 'submit_comment' in request.POST:
+                if not request.user.is_authenticated:
+                    return render(request, "bets/listing.html", {
+                        "authenticated": request.user.is_authenticated,
+                        "listing": listing,
+                        "bid_form": NewBidForm(),
+                        "comment_form": NewCommentForm(),
+                        "message": message,
+                        "bids": bids,
+                    })
+                comment_form = NewCommentForm(request.POST)
+                if comment_form.is_valid():
+                    comment = comment_form.save(commit=False)
+                    comment.commenter = request.user
+                    comment.listing = listing
+                    comment.date = date.today()
+
+                    print("aaaaaaaaaaaaa")
+
+                    comment.save()
+                    return render(request, "bets/listing.html", {
+                        "authenticated": request.user.is_authenticated,
+                        "listing": listing,
+                        "bid_form": NewBidForm(),
+                        "comment_form": NewCommentForm(),
+                        "message": message,
+                    })
     else:
         return redirect("index") # TODO: This should display a page not found error or smth
         
     return render(request, "bets/listing.html", {
         "authenticated": request.user.is_authenticated,
         "listing": listing,
-        "form": form,
+        "bid_form": bid_form,
+        "comment_form": comment_form,
         "bids": bids,
     })

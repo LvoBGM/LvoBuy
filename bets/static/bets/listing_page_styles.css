@@ -30,3 +30,6 @@
     overflow: auto;
     padding-bottom: 1px;
 }
+#comments-section {
+    padding: 3vw;
+}
