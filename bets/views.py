@@ -97,8 +97,19 @@ def listing(request, id):
     queryset = Listing.objects.filter(id=id)
     if queryset.exists():
         listing = queryset.first()
-        if request.method == 'POST': #TODO: I think this needs to be redone, like if there are not bids the user should only have the option to bid the starting amount
+        if request.method == 'POST': #TODO: I think this needs to be redone, like if there are not bids the user should only have the option to bid the starting amount 
             form = NewBidForm(request.POST)
+
+            if not request.user.is_authenticated:
+                message = "You need to be logged in to bid!"
+                print("afdg")
+                return render(request, "bets/listing.html", {
+                    "authenticated": request.user.is_authenticated,
+                    "listing": listing,
+                    "form": form,
+                    "message": message,
+                })
+            
             if form.is_valid():
                 highest_bid = Bid.objects.filter(listing=listing).aggregate(Max('amount'))['amount__max']
                 bid = form.save(commit=False)
