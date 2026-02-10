@@ -14,8 +14,21 @@
     <h1 id="listing-title">{{listing.title}}</h1>
     <hr>
     <p id="listing-description">{{listing.description}}</p>
-    {{listing.starting_bid}}
+    <h3>Current Bids</h3>
+    <p id="listing-bids">
+        {% if bids %}
+            {% for bid in bids %}
+                {{bid.bidder}}: {{ bid.amount }} <br>
+            {% endfor %}
+        {% else %}
+            There are no current bids. Be the first!
+        {% endif %}
+    </p>
+    
     {% if authenticated and form%}
+    {% if not bids %}
+        Starting bid: {{listing.starting_bid}}
+    {% endif %}
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
         {{ form }}

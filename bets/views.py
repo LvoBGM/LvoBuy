@@ -97,6 +97,7 @@ def listing(request, id):
     queryset = Listing.objects.filter(id=id)
     if queryset.exists():
         listing = queryset.first()
+        bids = listing.bids.all()
         if request.method == 'POST': #TODO: I think this needs to be redone, like if there are not bids the user should only have the option to bid the starting amount 
             form = NewBidForm(request.POST)
 
@@ -108,6 +109,7 @@ def listing(request, id):
                     "listing": listing,
                     "form": form,
                     "message": message,
+                    "bids": bids,
                 })
             
             if form.is_valid():
@@ -125,6 +127,7 @@ def listing(request, id):
                     "listing": listing,
                     "form": form,
                     "message": message,
+                    "bids": bids,
                 })
         else:
             form = NewBidForm()
@@ -135,4 +138,5 @@ def listing(request, id):
         "authenticated": request.user.is_authenticated,
         "listing": listing,
         "form": form,
+        "bids": bids,
     })
