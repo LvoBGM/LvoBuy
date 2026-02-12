@@ -112,6 +112,7 @@ def listing(request, id):
 
     if queryset.exists():
         listing = queryset.first()
+        comments = Comments.objects.filter(listing=listing)
         bids = listing.bids.all()
         if request.method == 'POST': #TODO: I think this needs to be redone, like if there are not bids the user should only have the option to bid the starting amount 
 
@@ -124,6 +125,7 @@ def listing(request, id):
                         "listing": listing,
                         "message": message,
                         "bids": bids,
+                        "comments": comments,
                     })
 
                 bid_form = NewBidForm(request.POST)
@@ -144,6 +146,7 @@ def listing(request, id):
                         "comment_form": comment_form,
                         "message": message,
                         "bids": bids,
+                        "comments": comments,
                     })
             # Comment Form
             elif 'submit_comment' in request.POST:
@@ -153,6 +156,7 @@ def listing(request, id):
                         "listing": listing,
                         "message": message,
                         "bids": bids,
+                        "comments": comments,
                     })
                 comment_form = NewCommentForm(request.POST)
                 if comment_form.is_valid():
@@ -170,6 +174,7 @@ def listing(request, id):
                         "bid_form": bid_form,
                         "comment_form": NewCommentForm(),
                         "message": message,
+                        "comments": comments,
                     })
     else:
         return redirect("index") # TODO: This should display a page not found error or smth
@@ -180,4 +185,5 @@ def listing(request, id):
         "bid_form": bid_form,
         "comment_form": comment_form,
         "bids": bids,
+        "comments": comments,
     })

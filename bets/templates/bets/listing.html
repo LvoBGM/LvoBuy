@@ -49,5 +49,11 @@
         <input type="submit", value="Post" name="submit_comment">
     </form>
     {% endif %}
+    <hr>
+    {% for comment in comments  %}
+        {{comment.commenter.username}}
+        {{comment.date}}
+        <br> {{comment.comment}} <br>
+    {% endfor %}
 </div>
 {% endblock %}
