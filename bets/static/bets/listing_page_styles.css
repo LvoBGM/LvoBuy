@@ -35,15 +35,20 @@
     padding: 3vw;
 }
 
-#comment-username {
+.comment-username {
     font-weight: bold;
 }
 
-#comment-date {
+.comment-date {
     font-size: small;
 }
 
 .comment-box {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.comment-anchor {
+    color: black;
+    text-decoration: none;
 }

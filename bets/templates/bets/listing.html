@@ -52,9 +52,9 @@
     <hr>
     {% for comment in comments  %}
     <div class="comment-box">
-        <span id="comment-username">{{comment.commenter.username}}</span>
-        <span id="comment-date">{{comment.date}}</span>
-        <br> <span id="comment-content">{{comment.comment}}</span> <br>
+        <a class="comment-anchor" href="{% url 'view_account' comment.commenter.username %}"><span class="comment-username">{{comment.commenter.username}}</span></a>
+        <span class="comment-date">{{comment.date}}</span>
+        <br> <span class="comment-content">{{comment.comment}}</span> <br>
     </div>
     {% endfor %}
 </div>
