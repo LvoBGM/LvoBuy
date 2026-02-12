@@ -7,10 +7,6 @@ h1 {
     text-align: center;
 }
 
-.section-header {
-    text-align: center;
-}
-
 .listing-item {
     display: flex;
     height: 250px;

@@ -98,10 +98,13 @@ def new_listing(request):
 
 def account(request, username):
     user = get_user_model().objects.filter(username=username).first()
+    bids = user.bids.all()
+    print(bids)
     return render(request, "bets/account.html", {
         "authenticated": request.user.is_authenticated,
         "listings": user.listings.all(),
         "username": user.get_username(),
+        "bids": bids,
     })
 
 def listing(request, id):

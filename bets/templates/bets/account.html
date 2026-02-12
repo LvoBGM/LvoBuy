@@ -2,15 +2,34 @@
 {% load static %}
 
 {% block title %}
-    {{ username }}'s Profile
+    {{ username }}
 {% endblock title %}
 
 {% block stylesheet %}
+<link rel="stylesheet" href="{% static 'bets/account-styles.css' %}">
     <link rel="stylesheet" href="{% static 'bets/styles.css' %}">
 {% endblock stylesheet %}
 
 {% block body %}
     <h1>{{ username }}</h1>
     <hr>
-    {% include "bets/listings_layout.html" %}
+    <div id="profile-grid">
+        <div>
+            <h2 class="section-header"> Listings </h2>
+            {% include "bets/listings_layout.html" %}
+        </div>
+        <div>
+            <h2 class="section-header"> Bets </h2>
+                {% if bids %}
+                    <p id="profile-bids">
+                    {% for bid in bids %}
+                        {{bid.listing.title}}: {{ bid.amount }} <br>
+                    {% endfor %}
+                    </p>
+                {% else %}
+                    This user has not bid on anything!
+                {% endif %}
+        </div>
+    </div>
+    
 {% endblock %}
