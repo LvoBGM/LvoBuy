@@ -98,11 +98,12 @@ def new_listing(request):
 
 @login_required()
 def account(request):
-    return render(request, "bets/account.html", {
+    return render(request, "bets/my-account.html", {
         "authenticated": request.user.is_authenticated,
         "listings": request.user.listings.all(),
         "username": request.user.get_username(),
     })
+    
 
 def listing(request, id):
     queryset = Listing.objects.filter(id=id)
