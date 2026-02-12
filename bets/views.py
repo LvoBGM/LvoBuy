@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
@@ -103,7 +103,14 @@ def account(request):
         "listings": request.user.listings.all(),
         "username": request.user.get_username(),
     })
-    
+
+def view_account(request, username):
+    user = get_user_model().objects.filter(username=username).first()
+    return render(request, "bets/my-account.html", {
+        "authenticated": request.user.is_authenticated,
+        "listings": user.listings.all(),
+        "username": user.get_username(),
+    })
 
 def listing(request, id):
     queryset = Listing.objects.filter(id=id)
