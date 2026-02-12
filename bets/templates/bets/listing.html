@@ -51,9 +51,11 @@
     {% endif %}
     <hr>
     {% for comment in comments  %}
-        {{comment.commenter.username}}
-        {{comment.date}}
-        <br> {{comment.comment}} <br>
+    <div class="comment-box">
+        <span id="comment-username">{{comment.commenter.username}}</span>
+        <span id="comment-date">{{comment.date}}</span>
+        <br> <span id="comment-content">{{comment.comment}}</span> <br>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

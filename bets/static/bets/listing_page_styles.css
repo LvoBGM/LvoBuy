@@ -30,6 +30,20 @@
     overflow: auto;
     padding-bottom: 1px;
 }
+
 #comments-section {
     padding: 3vw;
+}
+
+#comment-username {
+    font-weight: bold;
+}
+
+#comment-date {
+    font-size: small;
+}
+
+.comment-box {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
