@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path("", views.bets_root, name="root"),
     path("home", views.home, name="home"),
+    path("home/<int:page_number>", views.home_specific_page, name="home_specific_page"),
     path("login", views.login_view, name="login"),
     path("register", views.register_view, name="register"),
     path("logout", views.logout_view, name="logout"),

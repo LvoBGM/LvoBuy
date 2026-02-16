@@ -38,13 +38,22 @@ class NewCommentForm(forms.ModelForm):
 
 # Views
 def home(request):
-    return render(request, "bets/index.html", {
-        "authenticated": request.user.is_authenticated,
-        "listings": Listing.objects.all(),
-    })
+    return redirect("home_specific_page", 1)
 
 def bets_root(request):
     return redirect("home")
+
+def home_specific_page(request, page_number):
+    listings_per_page = 8
+    first_page = (page_number - 1) * listings_per_page
+    last_page = first_page + listings_per_page
+
+    listings = Listing.objects.all()[first_page:last_page]
+
+    return render(request, "bets/index.html", {
+        "authenticated": request.user.is_authenticated,
+        "listings": listings,
+    })
 
 
 def login_view(request):
