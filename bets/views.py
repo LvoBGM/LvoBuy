@@ -37,11 +37,15 @@ class NewCommentForm(forms.ModelForm):
         }
 
 # Views
-def index(request):
+def home(request):
     return render(request, "bets/index.html", {
         "authenticated": request.user.is_authenticated,
         "listings": Listing.objects.all(),
     })
+
+def bets_root(request):
+    return redirect("home")
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -51,7 +55,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("index")
+            return redirect("home")
         else:
             return render(request, "bets/login.html", {
                 "message": "Invalid Credentials",
@@ -62,14 +66,14 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("index")
+    return redirect("home")
 
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("index")
+            return redirect("home")
     else:
         form = UserCreationForm()
     
@@ -87,7 +91,7 @@ def new_listing(request):
             listing.seller = request.user
             listing.save()
             
-            return redirect("index")
+            return redirect("home")
     else:
         form = NewListingForm()
 
@@ -180,7 +184,7 @@ def listing(request, id):
                         "comments": comments,
                     })
     else:
-        return redirect("index") # TODO: This should display a page not found error or smth
+        return redirect("home") # TODO: This should display a page not found error or smth
         
     return render(request, "bets/listing.html", {
         "authenticated": request.user.is_authenticated,
