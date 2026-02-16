@@ -48,11 +48,14 @@ def home_specific_page(request, page_number):
     first_page = (page_number - 1) * listings_per_page
     last_page = first_page + listings_per_page
 
+    page_count = (Listing.objects.all().count() // listings_per_page) + 1
+
     listings = Listing.objects.all()[first_page:last_page]
 
     return render(request, "bets/index.html", {
         "authenticated": request.user.is_authenticated,
         "listings": listings,
+        "page_count": range(1, page_count + 1),
     })
 
 
@@ -112,10 +115,16 @@ def new_listing(request):
 def account(request, username):
     user = get_user_model().objects.filter(username=username).first()
     bids = user.bids.all()
-    print(bids)
+    
+    # Calculate listings
+    listings_count = Listing.objects.all().count()
+    listings_shown = 6
+
+    listings = user.listings.all()[0:listings_shown]
+
     return render(request, "bets/account.html", {
         "authenticated": request.user.is_authenticated,
-        "listings": user.listings.all(),
+        "listings": listings,
         "username": user.get_username(),
         "bids": bids,
     })

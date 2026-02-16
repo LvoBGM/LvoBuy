@@ -1,0 +1,9 @@
+<!-- a "page_count" variable is required! -->
+
+<hr>
+
+<nav>
+    {% for page in page_count%}
+        <a href="{% url 'home_specific_page' page %}">{{ page }}</a>
+    {% endfor %}
+</nav>
