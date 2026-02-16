@@ -120,6 +120,12 @@ def account(request, username):
     listings_count = Listing.objects.all().count()
     listings_shown = 6
 
+    # Check if the listings grid should show a "show more" message
+    if listings_count > listings_shown:
+        show_more = True
+    else:
+        show_more = False
+    
     listings = user.listings.all()[0:listings_shown]
 
     return render(request, "bets/account.html", {
@@ -127,7 +133,28 @@ def account(request, username):
         "listings": listings,
         "username": user.get_username(),
         "bids": bids,
+        "show_more": show_more,
     })
+
+def account_listings(request, username, page_number):
+    user = get_user_model().objects.filter(username=username).first()
+    
+    # Calculate listings
+    listings_per_page = 8
+    first_page = (page_number - 1) * listings_per_page
+    last_page = first_page + listings_per_page
+
+    page_count = (user.listings.all().count() // listings_per_page) + 1
+
+    listings = user.listings.all()[first_page:last_page]
+    
+    return render(request, "bets/account_listings.html", {
+        "authenticated": request.user.is_authenticated,
+        "listings": listings,
+        "username": user.get_username(),
+        "page_count": range(1, page_count + 1),
+    })
+
 
 def listing(request, id):
     queryset = Listing.objects.filter(id=id)

@@ -10,6 +10,7 @@ urlpatterns = [
     path("register", views.register_view, name="register"),
     path("logout", views.logout_view, name="logout"),
     path("new-listing", views.new_listing, name="new_listing"),
-    path("account/<str:username>", views.account, name="account"),
+    path("account/<str:username>/", views.account, name="account"),
+    path("account/<str:username>/listings/<int:page_number>", views.account_listings, name="account_listings"),
     path("listing/<int:id>", views.listing, name="listing"),
 ]

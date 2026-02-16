@@ -17,6 +17,9 @@
         <div>
             <h2 class="section-header"> Listings </h2>
             {% include "bets/listings_layout.html" %}
+            {% if show_more %}
+                <a href="{% url 'account_listings' username 1 %}" >Show More</a>
+            {% endif %}
         </div>
         <div>
             <h2 class="section-header"> Bets </h2>

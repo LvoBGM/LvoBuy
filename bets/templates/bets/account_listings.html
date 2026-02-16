@@ -1,0 +1,21 @@
+{% extends "bets/layout.html" %}
+{% load static %}
+
+{% block title %}
+    {{ username }}'s Listings
+{% endblock title %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{% static 'bets/account-styles.css' %}">
+    <link rel="stylesheet" href="{% static 'bets/styles.css' %}">
+{% endblock stylesheet %}
+
+{% block body %}
+    <h1>{{ username }}'s Listings</h1>
+
+    <hr>
+    
+    {% include "bets/listings_layout.html" %}
+    {% include "bets/listings_navbar_layout.html" %}
+    
+{% endblock %}
