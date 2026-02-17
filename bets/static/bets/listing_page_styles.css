@@ -43,6 +43,13 @@
     font-size: small;
 }
 
+.comment-paragraph {
+    margin: 0;
+    padding: 0;
+    display: block;
+    line-height: inherit;
+}
+
 .comment-box {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -50,5 +57,11 @@
 
 .comment-anchor {
     color: black;
+    text-decoration: none;
+}
+
+.read-more, .read-less {
+    display: block;
+    color: gray;
     text-decoration: none;
 }

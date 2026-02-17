@@ -54,8 +54,18 @@
     <div class="comment-box">
         <a class="comment-anchor" href="{% url 'account' comment.commenter.username %}"><span class="comment-username">{{comment.commenter.username}}</span></a>
         <span class="comment-date">{{comment.date}}</span>
-        <br> <span class="comment-content">{{comment.comment}}</span> <br>
+        <br>
+        <span class="comment-content" data-full-text="{{ comment.comment }}">
+        {% if comment.comment|length > 150 %}
+            <span class="truncated-text">{{ comment.comment|slice:":150" }}...</span>
+            <a href="javascript:void(0);" class="read-more">Read More</a>
+        {% else %}
+            {{comment.comment}}
+        {% endif %}
+        </span>
+        <br>
     </div>
     {% endfor %}
 </div>
+<script src="{% static 'bets/read-more.js' %}"></script>
 {% endblock %}
