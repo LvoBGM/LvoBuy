@@ -2,7 +2,7 @@
 
 <hr>
 
-<nav>
+<nav id="listings-page-nav">
     {% for page in page_count%}
         <a href="{% url 'home_specific_page' page %}">{{ page }}</a>
     {% endfor %}
