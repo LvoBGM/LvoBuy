@@ -117,11 +117,11 @@ def account(request, username):
     bids = user.bids.all()
     
     # Calculate listings
-    listings_count = Listing.objects.all().count()
+    listings_count = user.listings.all().count()
     listings_shown = 6
 
     # Check if the listings grid should show a "show more" message
-    if listings_count > listings_shown:
+    if listings_count >= listings_shown:
         show_more = True
     else:
         show_more = False
