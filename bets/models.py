@@ -16,6 +16,9 @@ class Listing(models.Model):
         related_name="listings"
     )
 
+    def __str__(self):
+        return f"{self.id}-{self.title} : {self.description} | Sold by {self.seller.username}, with a starting bid of {self.starting_bid}"
+
 class Bid(models.Model):
     bidder = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -33,6 +36,8 @@ class Bid(models.Model):
 
     amount = models.FloatField()
     
+    def __str__(self):
+        return f"{self.id}-{self.bidder.username} has a bid of {self.amount} on {self.listing.id}-{self.listing.title}"
 
 class Comments(models.Model):
     comment = models.CharField()
@@ -51,3 +56,6 @@ class Comments(models.Model):
         on_delete=models.CASCADE,
         related_name="comments"
     )
+
+    def __str__(self):
+        return f"{self.id}-{self.commenter.username} commented : {self.comment} on {self.date}"
