@@ -21,17 +21,33 @@
                 <a id="show-more-anchor" href="{% url 'account_listings' username 1 %}" >Show More</a>
             {% endif %}
         </div>
-        <div>
-            <h2 class="section-header"> Bets </h2>
-                {% if bids %}
-                    <p id="profile-bids">
-                    {% for bid in bids %}
-                        {{bid.listing.title}}: {{ bid.amount }} <br>
-                    {% endfor %}
-                    </p>
-                {% else %}
-                    This user has not bid on anything!
-                {% endif %}
+        <div id="profile-bids">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Bets
+                </div>
+                <div class="card-body p-0">
+                    <ol class="list-group list-group-flush list-group-numbered">
+                        {% if bids %}
+                            {% for bid in bids %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{ bid.listing.title }}</div>
+                                </div>
+                                <span class="badge bg-success rounded-pill">${{ bid.amount }}</span>
+                            </li>
+                            {% endfor %}
+                        {% else %}
+                            <li class="list-group-item">
+                                <div class="ms-2">
+                                    <div class="fw-bold">No Bids!</div>
+                                    <span class="text-muted">User has not bid on anything yet.</span>
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ol>
+                </div>
+            </div>
         </div>
     </div>
     
