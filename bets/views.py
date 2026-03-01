@@ -165,7 +165,7 @@ def listing(request, id):
     if queryset.exists():
         listing = queryset.first()
         comments = Comments.objects.filter(listing=listing)
-        bids = listing.bids.all()
+        bids = listing.bids.all().order_by("-amount")
         if request.method == 'POST': #TODO: I think this needs to be redone, like if there are not bids the user should only have the option to bid the starting amount 
 
             # Bid Form
