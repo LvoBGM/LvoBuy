@@ -11,33 +11,55 @@
         <img id='listing-image' src="{{ listing.image_url }}">
     {% endif %}
     <div id="listing-info">
-    <h1 id="listing-title">{{listing.title}}</h1>
-    <hr>
-    <p id="listing-description">{{listing.description}}</p>
-    <h3>Current Bids</h3>
-    <p id="listing-bids">
-        {% if bids %}
-            {% for bid in bids %}
-                {{bid.bidder}}: {{ bid.amount }} <br>
-            {% endfor %}
-        {% else %}
-            There are no current bids. Be the first!
+        <h1 id="listing-title">{{listing.title}}</h1>
+        <hr>
+        <p id="listing-description">{{listing.description}}</p>
+        <div id="listing-bids" style="max-height: 40ex">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    Bids
+                </div>
+                <div class="card-body p-0">
+                    {% if bids %}
+                        <ol class="list-group list-group-flush list-group-numbered">
+                            {% for bid in bids %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">{{ bid.bidder.username }}</div>
+                                    </div>
+                                    <span class="badge bg-success rounded-pill">${{ bid.amount }}</span>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% else %}
+                        <li class="list-group-item text-center py-4">
+                            <p class="text-muted mb-0">No bids yet. Be the first!</p>
+                            <small>Starting bid: <strong>${{ listing.starting_bid }}</strong></small>
+                        </li>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        {% if authenticated and bid_form %}
+            <div class="card border-primary shadow-sm mt-4">
+                <div class="card-body">
+                    <label class="form-label fw-bold mb-3">Place Your Bid</label>
+                    <form id="bid-form" action="{% url 'listing' listing.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            {{ bid_form.amount }} 
+                            <button type="submit" class="btn btn-primary px-4" name="submit_bid">Place Bid</button>
+                        </div>
+
+                        {% if message %}
+                            <div class="mt-2 small text-danger fw-bold">{{ message }}</div>
+                        {% endif %}
+                    </ol>
+                </div>
+            </div>
         {% endif %}
-    </p>
-    
-    {% if authenticated and bid_form %}
-    {% if not bids %}
-        Starting bid: {{listing.starting_bid}}
-    {% endif %}
-    <form action="{% url 'listing' listing.id %}" method="post">
-        {% csrf_token %}
-        {{ bid_form }}
-        <input type="submit", value="Bid" name="submit_bid">
-    </form>
-    {% endif %}
-    {% if message %}
-            <div>{{ message }}</div>
-    {% endif %}
     </div>
 </div>
 

@@ -22,6 +22,7 @@
 
 #listing-info {
     grid-area: box-2;
+    margin-right: 50px;
 }
 
 #listing-bids {
