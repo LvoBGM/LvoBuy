@@ -68,7 +68,7 @@
     <form action="{% url 'listing' listing.id %}" method="post">
         {% csrf_token %}
         {{ comment_form }}
-        <input type="submit", value="Post" name="submit_comment">
+        <input type="submit" class="btn btn-primary" value="Post" name="submit_comment" style="margin-top: 10px;">
     </form>
     {% endif %}
     <hr>

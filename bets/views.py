@@ -37,10 +37,17 @@ class NewCommentForm(forms.ModelForm):
         fields = ['comment']
         widgets = {
             'comment': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Leave a comment...'
+                'placeholder': 'Leave a comment...',
+                'rows': 1,
+                'style': 'resize:none;'
             }),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(NewCommentForm, self).__init__(*args, **kwargs)
+        
+        self.fields['comment'].label = ""
+        self.fields['comment'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Leave a comment!'})
 
 # Views
 def home(request):
