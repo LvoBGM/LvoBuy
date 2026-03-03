@@ -14,12 +14,12 @@
         <h1 id="listing-title">{{listing.title}}</h1>
         <hr>
         <p id="listing-description">{{listing.description}}</p>
-        <div id="listing-bids" style="max-height: 40ex">
-            <div class="card shadow-sm">
+        <div id="listing-bids">
+            <div class="card border-primary shadow-sm">
                 <div class="card-header bg-primary text-white">
                     Bids
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body p-0 rounded-bottom" style="max-height: 40ex; overflow: auto;">
                     {% if bids %}
                         <ol class="list-group list-group-flush list-group-numbered">
                             {% for bid in bids %}

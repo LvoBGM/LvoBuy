@@ -25,13 +25,6 @@
     margin-right: 50px;
 }
 
-#listing-bids {
-    line-height: 2.5ex;
-    max-height: 20ex;
-    overflow: auto;
-    padding-bottom: 1px;
-}
-
 #comments-section {
     padding: 3vw;
 }
