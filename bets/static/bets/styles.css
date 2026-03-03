@@ -7,6 +7,10 @@ h1 {
     text-align: center;
 }
 
+#page-header {
+    margin: 20px;
+}
+
 .listing-item {
     display: flex;
     height: 250px;
