@@ -22,13 +22,7 @@
 
 #listing-info {
     grid-area: box-2;
-}
-
-#listing-bids {
-    line-height: 2.5ex;
-    max-height: 20ex;
-    overflow: auto;
-    padding-bottom: 1px;
+    margin-right: 50px;
 }
 
 #comments-section {

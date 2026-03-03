@@ -25,16 +25,29 @@ class NewBidForm(forms.ModelForm):
     class Meta:
         model = Bid
         fields = ["amount"]
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['amount'].label = "Eyeing this item? Top the current bid to make it yours!"
+        self.fields['amount'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Enter Bid Amount'})
+
 class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comments
         fields = ['comment']
         widgets = {
             'comment': forms.Textarea(attrs={
-                'class': 'form-control',
-                'placeholder': 'Leave a comment...'
+                'placeholder': 'Leave a comment...',
+                'rows': 1,
+                'style': 'resize:none;'
             }),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(NewCommentForm, self).__init__(*args, **kwargs)
+        
+        self.fields['comment'].label = ""
+        self.fields['comment'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Leave a comment!'})
 
 # Views
 def home(request):
