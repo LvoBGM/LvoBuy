@@ -5,10 +5,29 @@
    {% if message %}
       <div>{{ message }}</div>
    {% endif %}
+   <div class="flex-grow-1 d-flex justify-content-center">
+      <form id="registration-form" action="{% url 'register' %}" method="post" style="margin-top: 20vh; margin-bottom: 10vh;">
+         {% csrf_token %}
+         <div class="d-flex flex-column align-items-center">
+             <div class="mb-3">
+                 <label class="form-label">{{ form.username.label }}</label>
+                 <input type="text" name="{{ form.username.html_name }}" class="form-control" placeholder="Username">
+                 <small class="text-danger">{{ form.username.errors }}</small>
+             </div>
 
-   <form action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit", value="Register">
-   </form>
+             <div class="mb-3">
+                 <label class="form-label">Password</label>
+                 <input type="password" name="{{ form.password.html_name }}" class="form-control" placeholder="Password">
+                 <small class="text-danger">{{ form.password.errors }}</small>
+             </div>
+
+             <div class="mb-3">
+                 <label class="form-label">Confirm Password</label>
+                 <input type="password" name="password_confirm" class="form-control" placeholder="Confirm Password">
+             </div>
+
+             <button type="submit" class="btn btn-primary">Register</button>
+         </div>
+      </form>
+   </div>
 {% endblock %}

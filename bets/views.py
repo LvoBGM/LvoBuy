@@ -9,6 +9,13 @@ from datetime import date
 
 
 # Forms
+class StyledUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add a class to all fields at once
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control', 'placeholder': field.label})
+
 class NewListingForm(forms.ModelForm):
     class Meta:
         model = Listing
@@ -95,12 +102,12 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = StyledUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("home")
     else:
-        form = UserCreationForm()
+        form = StyledUserCreationForm()
     
     return render(request, "bets/register.html", {
         "form": form,
