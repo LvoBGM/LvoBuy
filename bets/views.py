@@ -78,8 +78,10 @@ def home_specific_page(request, page_number):
         "page_count": range(1, page_count + 1),
     })
 
-
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('home_specific_page', 1)
+
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
@@ -101,6 +103,9 @@ def logout_view(request):
     return redirect("home")
 
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('home_specific_page', 1)
+    
     if request.method == 'POST':
         form = StyledUserCreationForm(request.POST)
         if form.is_valid():
@@ -108,7 +113,7 @@ def register_view(request):
             return redirect("home")
     else:
         form = StyledUserCreationForm()
-    
+
     return render(request, "bets/register.html", {
         "form": form,
     })
