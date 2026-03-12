@@ -1,9 +1,6 @@
 {% extends "bets/layout.html" %}
 
 {% block body %}
-   {% if message %}
-      <div>{{ message }}</div>
-   {% endif %}
    <div class="flex-grow-1 d-flex justify-content-center">
       <form action="{% url 'login' %}" method="post" style="margin-top: 20vh; margin-bottom: 10vh;">
          {% csrf_token %}
@@ -16,6 +13,11 @@
               <label for="exampleInputPassword1" class="form-label">Password</label>
               <input type="password" class="form-control" name="password", placeholder="Password">
             </div>
+            {% if message %}
+               <div class="alert alert-danger" role="alert" style="width: 100%; max-width: 300px; text-align: center;">
+                  {{ message }}
+               </div>
+            {% endif %}
             <button type="submit" class="btn btn-primary">Login</button>
          </div>
       </form>
